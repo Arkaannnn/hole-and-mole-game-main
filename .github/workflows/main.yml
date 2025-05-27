@@ -1,19 +1,25 @@
-trigger:
-- main
+name: Flask CI
 
-pool:
-  vmImage: ubuntu-latest
+on:
+  push:
+    branches: [main]
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-- script: |
-    pip install flask flask-cors
-    python backend/init_db.py
-  displayName: 'Install dependencies and initialize DB'
+    steps:
+    - uses: actions/checkout@v3
 
-- script: |
-    echo "Flask backend ready to run manually"
-  displayName: 'Prepare backend'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies and init DB
+      run: |
+        pip install flask flask-cors
+        python backend/init_db.py
+
+    - name: Final step
+      run: echo "Flask backend ready"
