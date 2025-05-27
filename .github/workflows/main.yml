@@ -16,10 +16,5 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install dependencies and init DB
-      run: |
-        pip install flask flask-cors
-        python backend/init_db.py
-
     - name: Final step
       run: echo "Flask backend ready"
